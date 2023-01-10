@@ -1,51 +1,26 @@
+# Development service orchestration
 version: '3.8'
 
 services:
   web:
     build: ./app
-    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; gunicorn hello_django.wsgi:application --bind 0.0.0.0:8000'
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./app/:/usr/src/app/
-      - static_volume:/usr/src/app/staticfiles
-      - media_volume:/usr/src/app/mediafiles
-    expose:
-      - 8000
-    environment:
-      - SECRET_KEY=please_change_me
-      - SQL_ENGINE=django.db.backends.postgresql
-      - SQL_DATABASE=postgres
-      - SQL_USER=postgres
-      - SQL_PASSWORD=postgres
-      - SQL_HOST=db
-      - SQL_PORT=5432
-      - DATABASE=postgres
-      - USE_S3=TRUE
-      - AWS_ACCESS_KEY_ID=CHANGE_THIS
-      - AWS_SECRET_ACCESS_KEY=CHANGE_THIS
-      - AWS_STORAGE_BUCKET_NAME=banyan-static-bucket
+    ports:
+      - '8000:8000'
+    env_file:
+      - env/.env.dev
     depends_on:
       - db
   db:
-    image: postgres:13-alpine
+    image: postgres:13.0-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    expose:
-      - 5432
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-  nginx:
-    build: ./nginx
-    volumes:
-      - static_volume:/usr/src/app/staticfiles
-      - media_volume:/usr/src/app/mediafiles
+      - postgres_volume:/var/lib/postgresql/data/
+    env_file:
+      - env/.env.prod.db
     ports:
-      - 1337:80
-    depends_on:
-      - web
+      - '5432:5432'
 
 volumes:
-  postgres_data:
-  static_volume:
-  media_volume:
+  postgres_volume:
