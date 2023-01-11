@@ -1,0 +1,11 @@
+*.pyc
+__pycache
+.DS_Store
+/env/.env.dev
+/env/.env.prod.db
+/env/.env.prod
+/env/.env.prod.db
+*.sqlite3
+/app/certfiles
+/app/staticfiles
+**/migrations/*.py
