@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -78,12 +78,13 @@ WSGI_APPLICATION = 'hello_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('SQL_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': os.getenv('SQL_DATABASE', os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': os.getenv('SQL_USER', 'user'),
-        'PASSWORD': os.getenv('SQL_PASSWORD', 'password'),
+        'ENGINE': os.getenv('SQL_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+        'NAME': os.getenv('SQL_DATABASE', 'your_db_name'),
+        'USER': os.getenv('SQL_USER', 'postgres'),
+        'PASSWORD': os.getenv('SQL_PASSWORD', 'your_db_password'),
         'HOST': os.getenv('SQL_HOST', 'localhost'),
         'PORT': os.getenv('SQL_PORT', '5432'),
     }
@@ -139,7 +140,7 @@ if USE_S3:
 # Local static settings for development
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static') ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Local media settings for development
 MEDIA_URL = '/certs/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'certfiles')
