@@ -14,7 +14,7 @@ echo "PostgreSQL started"
 echo "Running Flush.."
 python manage.py flush --no-input
 echo "Running Make Migrations.."
-python manage.py makemigrations
+python manage.py makemigrations upload
 echo "Running Migrate.."
 python manage.py migrate
 echo "Running Collect Static.."
