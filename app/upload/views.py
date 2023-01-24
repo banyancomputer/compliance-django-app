@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.http import JsonResponse
 from django.shortcuts import render
 
-from .models import CertUploadModel
+from .models import CertUploadModel, KnowYourMiner, HITRUST
 
 
 def image_upload(request):
@@ -16,3 +17,8 @@ def image_upload(request):
             'image_url': image_url
         })
     return render(request, 'upload.html')
+
+
+def minerData(response):
+    data = list(KnowYourMiner.objects.values())
+    return JsonResponse(data, safe=False)
